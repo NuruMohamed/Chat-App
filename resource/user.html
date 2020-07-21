@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="user.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <!-- 
+        - this is the root container 
+        - has 3 main components: header, messageConainer, and sendMessage
+    -->
+
+    <div id="globalContainer">
+        <!-- 
+            the 1st main component of the root container
+            the header container 
+        -->
+        <div id="header">
+            <img id="headerUserImage" src="user.svg"/>
+            <label id="headerUserName"> Nuru Mohamed</label>
+        </div>     
+        <!-- 
+            the 2nd main component of the root container 
+            contains all messages 
+        -->
+        <div id="messagesContainer">
+            <!-- is a message sent by the logged in user -->
+            <div class="messages sent">
+                <!-- the sent message content -->
+                <div class="sentMessageContent">
+                    Hey guyssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+                </div>
+            </div>
+            <!-- a message recieved by the logged in user -->
+            <div class="messages recieved">
+                <!-- image of the recieved message's sender -->
+                <img class="recievedUserImage" src="user.svg"/>
+                <div class="recievedMessage">
+                    <!-- sender name -->
+                    <div class="recievedMessageUsername"> John </div>
+                    <!-- recieved message content -->
+                    <div class="recievedMessageContent">Hey guysssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss</div> 
+                </div>
+            </div>
+
+        </div>
+        <!-- the 3rd main component of the root container -->
+        <!-- <div id="sendMessage"> -->
+        <form id="sendMessage" autocomplete="off">
+            <!-- the input element where message is typed -->
+            <input type="text" id="sendMessageInput" required/>
+            <!-- the icon to send a message -->
+            <input id="sendMessageIcon" value="send" type="submit" />
+            <!-- <img type="submit" id="sendMessageIcon" src="send.svg"/> -->
+        </form>
+            
+        <!-- </div> -->
+    </div>
+
+    <script src="clientScript.js"> </script>
+</body>
+</html>
