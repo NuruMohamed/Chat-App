@@ -21,7 +21,7 @@ sendMessageForm.addEventListener('submit', e => {
         sendMessage();
         sendMessageInput.value ='';
     }
-})
+});
 
 // fired when a websocket connection is established 
 connection.onopen = () => {
@@ -39,11 +39,14 @@ connection.onerror = e => {
 // this function sends a message to the server
 const sendMessage = () => {
     
-    let messageToBeSend = {
-        userName: currentUserName,
-        messageBody: sendMessageInput.value.trim()
-    }
-    connection.send(JSON.stringify(messageToBeSend));
+    let messageToBeSent = [
+        {
+            userName: currentUserName,
+            messageBody: sendMessageInput.value.trim()
+        }
+    ];
+    displayMessages(messageToBeSent, 'sent')
+    connection.send(JSON.stringify(messageToBeSent));
 }
 
 // displays messsages on the browser  
@@ -91,7 +94,7 @@ const displayMessages = (message, messageType) => {
 
 const parseIncomingMessage = messages => {
     let parsedMessages = JSON.parse(messages.data)
-    
+    console.log(parsedMessages);
     parsedMessages.forEach(eachMessage => {
 
         if(eachMessage.userName == currentUserName) { // if the message was sent by the current user
