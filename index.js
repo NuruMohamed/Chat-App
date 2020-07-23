@@ -3,7 +3,7 @@ const url = require('url');
 const path = require('path');
 const fs = require('fs');
 const webSocket = require('ws');
-const userConnected = require('./resource/databaseHandler');
+const userConnected = require('./Server/Database/databaseHandler');
 // const io = require('socket.io')(http);
 // let webSocketHandler = require('./WebSocketHandler');
 
@@ -12,33 +12,29 @@ const webSocketConnection = new webSocket.Server({port: 5000});
 // listen for http request  
 const server = http.createServer((req, res) => {
     processRequest(req, res);
-    // res.end('hello');
     
 }).listen(1000, () => {
     console.log("Chat HTTP server running: 1000");
 })
 
 // fires when a user is connects via a websocket
-// userSocket an object of a connected user, which is unique to every user connected. 
-webSocketConnection.on('connection', (userSocket, request) => {
-    // 
-    userConnected(userSocket);
+// connectedUser an object of a connected user, which is unique to every user connected. 
+webSocketConnection.on('connection', (connectedUser, request) => {
+    // is a function from the database handler file
+    userConnected(connectedUser);
 
     // fired when a message comes from a connected user
-    userSocket.on('message', message => {
+    connectedUser.on('message', message => {
+
         // loops through all connected users
         webSocketConnection.clients.forEach(user => {
             // send message to all connected users except the user that sent the message
-            userSocket != user? user.send(message) : null ;
+            connectedUser != user? user.send(message) : null ;
             
-        })
-        console.log(message)
-    })
-    console.log('client connected')
-})
+        });
+    });
 
-
-
+});
 
 
 
@@ -48,7 +44,7 @@ let processRequest = (req, res) => {
     // by default this will return the home html page
     if(parsedURL.pathname == '/') {
         fileReader('user.html', 'text/html', req, res);
-    } else if(path.basename(parsedURL.pathname).match(/[^\\/]+\.[^\\/]+$/)) {
+    } else if(path.basename(parsedURL.pathname).match(/[^\\/]+\.[^\\/]+$/)) { // if file is requested.
         
         fileReader(parsedURL.pathname, determineFileExtension(parsedURL.pathname), req, res);
     } 
@@ -62,7 +58,7 @@ let processRequest = (req, res) => {
 let fileReader = (requestedFile, fileType, req, res) => {
     // console.log(requestedFile);
 
-    fs.readFile(path.join(__dirname, 'resource', requestedFile), 'utf8', (err, data) => {
+    fs.readFile(path.join(__dirname, 'public', requestedFile), 'utf8', (err, data) => {
         if(err) {
             if(err == 'ENOENT') {
                 res.writeHead(404);
@@ -81,8 +77,10 @@ let fileReader = (requestedFile, fileType, req, res) => {
     });
 }
 
+
+// determines and returns the type of a file
 let determineFileExtension = (file) => {
-    // console.log(path.extname(file));
+    
     switch(path.extname(file)) {
         case '.html': 
             return 'text/html';
