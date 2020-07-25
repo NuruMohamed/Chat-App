@@ -2,13 +2,15 @@ const http = require('http');
 const url = require('url');
 const path = require('path');
 const fs = require('fs');
-const webSocket = require('ws');
-const {userConnected, storeMessage} = require('./Server/Database/databaseHandler');
-// const io = require('socket.io')(http);
-// let webSocketHandler = require('./WebSocketHandler');
+const databaselistener = require('./Server/databaseListener');
+const {webSocketServer} = require('./Server/webSocketServer');
 
-// listens for websocket request
-const webSocketConnection = new webSocket.Server({port: 5000});
+// watch for database changes 
+databaselistener();
+// fires websocket server 
+webSocketServer();
+
+
 // listen for http request  
 const server = http.createServer((req, res) => {
     processRequest(req, res);
@@ -17,24 +19,6 @@ const server = http.createServer((req, res) => {
     console.log("Chat HTTP server running: 1000");
 })
 
-// fires when a user is connects via a websocket
-// connectedUser an object of a connected user, which is unique to every user connected. 
-webSocketConnection.on('connection', (connectedUser, request) => {
-    // is a function from the database handler file
-    userConnected(connectedUser);
-
-    // fired when a message comes from a connected user
-    connectedUser.on('message', message => {
-        storeMessage(message);
-        // loops through all connected users
-        webSocketConnection.clients.forEach(user => {
-            // send message to all connected users except the user that sent the message
-            connectedUser != user? user.send(message) : null;
-            console.log('foreach');
-        });
-    });
-
-});
 
 
 

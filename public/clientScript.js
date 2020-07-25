@@ -39,14 +39,13 @@ connection.onerror = e => {
 // this function sends a message to the server
 const sendMessage = () => {
     
-    let messageToBeSent = [
-        {
+    const messageToBeSent = {
             userName: currentUserName,
             messageBody: sendMessageInput.value.trim()
         }
-    ];
+    
     displayMessages(messageToBeSent, 'sent')
-    connection.send(JSON.stringify(messageToBeSent));
+    connection.send(JSON.stringify([messageToBeSent]));
 }
 
 // displays messsages on the browser  
