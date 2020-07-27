@@ -3,7 +3,7 @@ const url = require('url');
 const path = require('path');
 const fs = require('fs');
 const databaselistener = require('./Server/databaseListener');
-const {webSocketServer} = require('./Server/webSocketServer');
+const {webSocketServer} = require('./Server/webSocket/webSocketServer');
 
 // watch for database changes 
 databaselistener();

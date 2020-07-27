@@ -1,4 +1,5 @@
-const {webSocketConnection} = require('./webSocketServer');
+// const {webSocketConnection} = require('./webSocketServer');
+const webSocketConnection = require('./webSocket/webSocketConnector');
 
 // sends previous messages to a user when it connects
 // the two parameters: First, an object of a connected user. Second, the messages retrieved from database
@@ -30,7 +31,8 @@ const sendMessageToAllUsers = message => {
     })
 }
 
+
 module.exports = {
     sendMessageToUser,
     sendMessageToAllUsers
-};
+}

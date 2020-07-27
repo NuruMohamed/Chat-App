@@ -1,17 +1,17 @@
-const webSocket = require('ws');
-const {userConnected, storeMessage} = require('./Database/databaseHandler');
+const webSocketConnection = require('./webSocketConnector');
+const {userConnected, storeMessage} = require('../Database/databaseHandler');
 
-// listens for websocket request
-const webSocketConnection = new webSocket.Server({port: 5000});
 
 const webSocketServer = () => {
     // fires when a user connects via a websocket
     // connectedUser is an object of a connected user, which is unique to every user that connects. 
-    webSocketConnection.on('connection', (connectedUser, request, client) => {
+    webSocketConnection.on('connection', (connectedUser, request) => {
+        connectedUser.id = 'passme'
         // is a function from the database handler file
         userConnected(connectedUser);
-console.log('request>> ',request.socket.remoteAddress);
-console.log('clienttt>> ',client);
+        
+        // console.log(connectedUser.id);
+
         // fired when a message comes from a connected user
         connectedUser.on('message', message => {
             storeMessage(message);
@@ -27,6 +27,5 @@ console.log('clienttt>> ',client);
 
 
 module.exports = {
-    webSocketServer,
-    webSocketConnection
+    webSocketServer
 };

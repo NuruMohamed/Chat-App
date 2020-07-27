@@ -1,15 +1,20 @@
 const retrieveData = require('./retrieveFromDatabase');  
-const {sendMessageToUser} = require('../sendDataToUsers');
 const storeToDatabase = require('./storeToDatabase');
 const connection = require('./databaseConnector');
-
+const {sendMessageToUser} = require('../sendDataToUsers');
 
 // retrieve all messages and send them to the connected user
 const userConnected = async (connectedUser) => {
+    console.log('>>> ' + connectedUser.id)
     let sqlQuery = `SELECT * FROM messages `;
-    let result = await retrieveData(sqlQuery);
-    console.log('2');
-    sendMessageToUser(connectedUser, result);
+    let messages;
+    try {
+        messages = await retrieveData(sqlQuery);
+    } catch (error) {
+        console.log(error);
+    }
+
+    sendMessageToUser(connectedUser, messages);
 }
 
 // stores message to the database that is sent by users 
