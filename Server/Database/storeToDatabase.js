@@ -5,7 +5,7 @@ const storeToDatabase = (sqlQuery) => {
     connection.query(sqlQuery, (error, result) => {
         if(error) throw error;
 
-        console.log(result);
+        // console.log(result);
     })
 }
 

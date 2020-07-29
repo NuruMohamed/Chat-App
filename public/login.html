@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="login.css" />
+    <title>Login</title>
+</head>
+<body>
+    <div id="loginContainer">
+        <form id="loginForm" method="POST" action="loginAction" autocomplete="off" >
+            <input type="text" id="loginUserNameField" name="username" placeholder="user name" required/>
+            <input id="joinButton" type = 'submit' value="JOIN"/>
+        </form>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+
+        loginForm.addEventListener('submit', e => {
+            console.log('submitted');
+            // e.preventDefault();
+        })
+    </script>
+</body>
+</html>

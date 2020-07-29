@@ -9,8 +9,6 @@ const webSocketServer = () => {
         connectedUser.id = 'passme'
         // is a function from the database handler file
         userConnected(connectedUser);
-        
-        // console.log(connectedUser.id);
 
         // fired when a message comes from a connected user
         connectedUser.on('message', message => {
