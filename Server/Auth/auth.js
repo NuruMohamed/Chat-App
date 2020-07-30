@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 module.exports = isAuthenticated = (req) => {
     if(req.headers.cookie) {
         const accessToken = findCookie('access_token', req);
-        console.log( accessToken);
+
         // if the user has the cookie 'access_token'
         if (accessToken) 
             return verifyUser(accessToken);         
@@ -17,9 +17,12 @@ module.exports = isAuthenticated = (req) => {
 
 // parse the user's cookies and return the cookie value of the one requested
 const findCookie = (cookieName, req) => {
+    // cookie header is a string where each cookies are separated by ; and a space
     const parsedCookie = req.headers.cookie.split('; ');
+    // holds the return value of the forEach callback function
     let cookieValue = false;
     parsedCookie.forEach(cookie => {
+        // a cookie's key and value are separeted by = sign 
         // if it's the requested cookie, return its value 
         if (cookie.split('=')[0] == cookieName) 
             cookieValue = cookie.split('=')[1];
@@ -30,6 +33,7 @@ const findCookie = (cookieName, req) => {
 }
 
 const verifyUser = access_token => {
+    // holds the return value of the callback function passed to jwt.verify() 
     let user;
     
     // verify if the JSON web token is valid
@@ -37,7 +41,6 @@ const verifyUser = access_token => {
         if(error) {
             user = false;
         } else {
-            console.log(data);
             user = data;
         }
     });

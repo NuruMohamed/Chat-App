@@ -13,21 +13,30 @@ const sendMessageToUser = (connectedUser, messages) => {
                             };
                         });
     // converts to JSON and sends messages to a user
-    connectedUser.send(JSON.stringify(messageToBeSent));
+    connectedUser.send(JSON.stringify({
+        dataType: 'message',
+        message: messageToBeSent 
+    }));
 }
 
 // send new message to all connected users
 const sendMessageToAllUsers = message => {
-    const messageToBeSent = {
+    const messageToBeSent = [ {
         userName: message.user,
         messageBody: message.message_body
-    };
+    }];
 
     // loops through all connected users
     webSocketConnection.clients.forEach(user=> {
         // converts to JSON and sends messages to a user
         // the JSON will be sent as an array, because the client script accepts an array
-        user.send(JSON.stringify([messageToBeSent]));
+        if(user.userName != message.user){
+            user.send(JSON.stringify({
+                dataType: 'message',
+                message: messageToBeSent
+            }));
+        }
+            
     })
 }
 

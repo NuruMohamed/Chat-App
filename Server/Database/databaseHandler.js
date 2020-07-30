@@ -5,7 +5,7 @@ const {sendMessageToUser} = require('../sendDataToUsers');
 
 // retrieve all messages and send them to the connected user
 const userConnected = async (connectedUser) => {
-    console.log('>>> ' + connectedUser.id)
+    
     let sqlQuery = `SELECT * FROM messages `;
     let messages;
     try {
@@ -18,10 +18,10 @@ const userConnected = async (connectedUser) => {
 }
 
 // stores message to the database that is sent by users 
-const storeMessage = (message) => {
+const storeMessage = (message, sender) => {
     let ParsedMessage = JSON.parse(message);
-    // console.log(ParsedMessage);
-    let sqlQuery =`INSERT INTO messages(message_body, user) VALUES('${ParsedMessage[0].messageBody}', '${ParsedMessage[0].userName}')`;
+
+    let sqlQuery =`INSERT INTO messages(message_body, user) VALUES('${ParsedMessage[0].messageBody}', '${sender}')`;
     storeToDatabase(sqlQuery);
 }
 

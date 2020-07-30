@@ -5,7 +5,7 @@ let messagesContainer = document.getElementById('messagesContainer');
 const sendMessageForm = document.getElementById('sendMessage');
 
 const connection = new WebSocket('ws://localhost:5000');
-const currentUserName = prompt('Your name?');
+let currentUserName;
 
 // for testing purpose
 // window.addEventListener('resize', () => {
@@ -26,8 +26,8 @@ sendMessageForm.addEventListener('submit', e => {
 // fired when a websocket connection is established 
 connection.onopen = () => {
     // when a message comes from the server
-    connection.onmessage = messages => {
-        parseIncomingMessage(messages);
+    connection.onmessage = incomingData => {
+        verifyIncomingData(incomingData);
     }
 }
 // fired if there is a problem when establishing a websocket connection 
@@ -91,10 +91,22 @@ const displayMessages = (message, messageType) => {
     
 }
 
-const parseIncomingMessage = messages => {
-    let parsedMessages = JSON.parse(messages.data)
-    console.log(parsedMessages);
-    parsedMessages.forEach(eachMessage => {
+const verifyIncomingData = (incomingData) => {
+    let parsedData = JSON.parse(incomingData.data);
+    
+    switch(parsedData.dataType) {
+        case 'currentUserName':
+            currentUserName = parsedData.userName;
+            break;
+        case 'message':
+            handleIncomingMessages(parsedData.message);
+            break;      
+    }
+}
+
+const handleIncomingMessages = messages => {
+    
+    messages.forEach(eachMessage => {
 
         if(eachMessage.userName == currentUserName) { // if the message was sent by the current user
             displayMessages(eachMessage, 'sent');
