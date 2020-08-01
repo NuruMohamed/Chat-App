@@ -9,11 +9,10 @@
 </head>
 <body>
     <!-- 
-        - this is the root container 
-        - has 3 main components: header, messageConainer, and sendMessage
+        - body is the root container
+        - there are 3 main components: header, messageContainer, and sendMessage
     -->
 
-    <div id="globalContainer">
         <!-- 
             the 1st main component of the root container
             the header container 
@@ -21,6 +20,10 @@
         <div id="header">
             <img id="headerUserImage" src="user.svg"/>
             <label id="headerUserName"> Nuru Mohamed</label>
+            <form id="logoutForm" action="logout">
+                <button type="submit" > Leave</button>
+            </form>
+            
         </div>     
         <!-- 
             the 2nd main component of the root container 
@@ -56,13 +59,18 @@
             <!-- the input element where message is typed -->
             <input type="text" id="sendMessageInput" required/>
             <!-- the icon to send a message -->
-            <input id="sendMessageIcon" value="send" type="submit" />
+            <button id="sendMessageButton" type="submit" > <img id="sendMessageIcon" src="send_blue.svg"/> </button>
             <!-- <img type="submit" id="sendMessageIcon" src="send.svg"/> -->
         </form>
-            
-        <!-- </div> -->
-    </div>
+
 
     <script src="clientScript.js"> </script>
+    <script>
+        document.getElementsByTagName('html')[0].style.height = `${window.innerHeight}px`;
+        window.onload = () => {
+            document.getElementsByTagName('body')[0].style.display = 'block'
+        }
+
+    </script>
 </body>
 </html>

@@ -1,17 +1,18 @@
 * {
     box-sizing: border-box;
 }
-html, body {
+body {
     height: 100%;
-    background-color: #F0B429;
+    margin: 0px;
 }
 #loginContainer {
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    width: 100%;
+    background-color: #F0B429;
+    height: 100vh;
+    width: 100vw;
 }
     #loginForm {
         display: flex;
@@ -19,7 +20,10 @@ html, body {
         justify-content: center;
         align-items: center;
         height: 30%;
-        width: 90%;
+        min-height: 190px;
+        width: 80%;
+        max-width: 300px; 
+        font-size: 14px;
         border-radius: 5px;
         background-color: white;
     }
@@ -27,7 +31,7 @@ html, body {
             height: 25%;
             width: 90%;
             padding: 5%;
-            font-size: 18px;
+            font-size: 1em;
             margin-bottom: 2%;
             border-left: 5px solid #F0B429;
             outline: none;
@@ -36,10 +40,17 @@ html, body {
             border-right: 0px;
         } 
         #joinButton {
-            height: 25%;
+            height: 22%;
             width: 90%;
             background-color: #2680C2;
             border: 0px;
-            font-size: 22px;
+            margin-top: 10px;
+            font-size: 1.5em;
             color: white;
+        }
+        #loginFormNote {
+            width: 90%;
+            font-size: 1em;
+            color: gray;
+            margin-top: 20px;
         }

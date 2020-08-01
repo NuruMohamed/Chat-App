@@ -4,34 +4,69 @@
 }
 
 body {
+    display: none;
+    /* flex-direction: column;
+    align-items: center; */
     margin: 0px;
+    height: 100%;
+    background-color: rgb(233, 233, 233);
 }
 
-#globalContainer {
-    display: flex;
-    flex-direction: column;
-}
+
     #header {
+        position: fixed;
+        top: 0px;
         display: flex;
         flex-direction: row;
         align-items: center;
         padding: 5px;
-        /* border: 1px solid gray; */
-        height: 8vh;
+        height:  46px;
+        /* min-height: 45.7px; */
+        width: 100%;
+        max-width: 768px;
         background-image: linear-gradient(to right, rgb(4, 168, 252), rgb(118, 246, 255));
     }
         #headerUserImage {
-            height: 6vh; 
-            margin-right: 5px;  
+            flex-grow: 1;
+            height: 90%; 
+            margin-right: 5px;              
         } 
-
+        #headerUserName {
+            flex-grow: 20;
+            /* min-width: 15vw;
+            max-width: 35vw;
+            word-wrap: none;
+            word-break: keep-all; */
+        }
+        #logoutForm {
+            flex-grow: 1;
+            text-align: right;
+            padding: 5px;
+                  
+        }
+            #logoutForm > button{
+                color: white;  
+                background-color: rgba(0, 0, 0, 0);
+                border: none;
+            }
+            #logoutForm > button :active {
+                background-color: rgba(255, 255, 255, 1); 
+                cursor: pointer;  
+                border: none;     
+                outline: none;
+            }
     #messagesContainer {
+        position: fixed;
+        top: 46px;
+        bottom: 46px;
         display: flex;
         flex-direction: column;
+        /* margin-top: 46px; */
         padding: 5px;
-        /* border:  1px solid gray; */
-        height: 84vh;
+        height: calc(100vh - 92px);
+        max-width: 768px;
         overflow: auto;
+        background-color: white;
     }
         .messages {
             margin-bottom: 5px;
@@ -59,7 +94,7 @@ body {
             align-items: flex-end;
         }
             .recievedUserImage {
-                height: 6vh; 
+                height: 39px; 
                 margin-right: 5px;  
             }
             .recievedMessage {
@@ -78,17 +113,54 @@ body {
                     color: white;
                 }
     #sendMessage {
-        /* border:  1px solid gray; */
-        height: 8vh;
+        position: fixed;   
+        bottom: 0px;   
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        height:  45px;
+        width: 100%;
+        max-width: 768px;
+        /* min-height: 45.7px; */
+        background-color: white;
+        border-top: 1px solid rgba(0, 0, 0, 0.411);
     }
         #sendMessageInput {
             height: 100%;
-            width: 89%;
+            width: 90%;
+            border: 0px;
+            padding-left: 5px;
             outline: none;
         }
-        #sendMessageIcon {
+        #sendMessageButton {
+            background-color: white;
+            padding: 1px;
+            border: 0px;
             height: 100%;
-            width: 10%;
+            width: 6%;
         }
-
+            #sendMessageIcon {
+                height: 25px;
+            }
     
+
+@media (min-width: 769px) {
+    #header {
+        left: calc((100% - 768px) / 2);
+    }
+    #messagesContainer {
+        left: calc((100% - 768px) / 2);
+    }
+    #sendMessage {
+        left: calc((100% - 768px) / 2);
+    }
+        #sendMessageInput {
+            width: 95%;
+        }
+}
+
+@media (min-width: 500px) {
+    #sendMessageInput {
+        width: 95%;
+    }
+}

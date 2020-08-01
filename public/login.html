@@ -5,20 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="login.css" />
     <title>Login</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+        #pageLoadingContainer{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+        #pageLoading {
+            height: 20%;
+        }  
+    </style>
 </head>
 <body>
     <div id="loginContainer">
         <form id="loginForm" method="POST" action="loginAction" autocomplete="off" >
-            <input type="text" id="loginUserNameField" name="username" placeholder="user name" required/>
+            <input type="text" id="loginUserNameField" name="username" placeholder="Enter user name" required/>
             <input id="joinButton" type = 'submit' value="JOIN"/>
+            <div id="loginFormNote">
+                If you joined before, you can use the username you used then 
+            </div>
         </form>
     </div>
 
-    <script>
-        const loginForm = document.getElementById('loginForm');
+    <div id="pageLoadingContainer">
+        <img id="pageLoading" src="Spinner.svg" />
+    </div>
 
+
+    <script>
+        // document.getElementsByTagName('html')[0].style.height = `${window.innerHeight}px`;
+        // console.log(document.getElementsByTagName('html')[0].offsetHeight);
+        
+        window.onload = () => {
+            document.getElementById('pageLoadingContainer').style.display = 'none';  
+            document.getElementById('loginContainer').style.display = 'flex';  
+        }
+
+        const loginForm = document.getElementById('loginForm');
         loginForm.addEventListener('submit', e => {
-            console.log('submitted');
+            
             // e.preventDefault();
         })
     </script>
