@@ -40,16 +40,15 @@ connection.onerror = e => {
 const sendMessage = () => {
     
     const messageToBeSent = {
-            userName: currentUserName,
             messageBody: sendMessageInput.value.trim()
         }
     
-    displayMessages(messageToBeSent, 'sent')
+    displayMessages(messageToBeSent, 'sent', true)
     connection.send(JSON.stringify([messageToBeSent]));
 }
 
 // displays messsages on the browser  
-const displayMessages = (message, messageType) => {
+const displayMessages = (message, messageType, isTheLastMessage) => {
     // if a message is sent by the current user
     if(messageType == 'sent') {
         // create new node for the new message
@@ -63,6 +62,8 @@ const displayMessages = (message, messageType) => {
         sendMessageContainer.appendChild(sendMessageContent);
         
         messagesContainer.appendChild(sendMessageContainer);
+
+        isTheLastMessage? sendMessageContainer.scrollIntoView(): null;
 
     } else if(messageType == 'recieved') { //if a message is not sent by the current user 
         // creating a new node elements to display recieved messages 
@@ -87,6 +88,8 @@ const displayMessages = (message, messageType) => {
         recievedMessageUsername.innerHTML = message.userName;
         recievedMessage.appendChild(recievedMessageContent);
         recievedMessageContent.innerHTML = message.messageBody;
+
+        isTheLastMessage? recievedContainer.scrollIntoView(): null;
     }
     
 }
@@ -96,6 +99,7 @@ const verifyIncomingData = (incomingData) => {
     
     switch(parsedData.dataType) {
         case 'currentUserName':
+            document.getElementById('headerUserName').innerHTML = parsedData.userName;
             currentUserName = parsedData.userName;
             break;
         case 'message':
@@ -105,13 +109,15 @@ const verifyIncomingData = (incomingData) => {
 }
 
 const handleIncomingMessages = messages => {
-    
-    messages.forEach(eachMessage => {
+    let isTheLastMessage = false;
+    messages.forEach((eachMessage, index) => {
 
         if(eachMessage.userName == currentUserName) { // if the message was sent by the current user
-            displayMessages(eachMessage, 'sent');
+            messages.length == index + 1? isTheLastMessage = true : null;
+            displayMessages(eachMessage, 'sent', isTheLastMessage);
         } else {                                      // if the message was recieved by the current user or not sent by the current user
-            displayMessages(eachMessage, 'recieved');
+            messages.length == index + 1? isTheLastMessage = true : null;
+            displayMessages(eachMessage, 'recieved', isTheLastMessage);
         }
         
     });

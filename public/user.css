@@ -61,12 +61,12 @@ body {
         bottom: 46px;
         display: flex;
         flex-direction: column;
-        /* margin-top: 46px; */
         padding: 5px;
         height: calc(100vh - 92px);
         max-width: 768px;
         overflow: auto;
         background-color: white;
+        /* background-image: url('background.jpg'); */
     }
         .messages {
             margin-bottom: 5px;

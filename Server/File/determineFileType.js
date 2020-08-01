@@ -16,6 +16,9 @@ let determineFileType = (file) => {
         case '.jpg': 
             return 'image/jpg';
             break; 
+        case '.jpeg': 
+            return 'image/jpeg';
+            break;
         case '.png': 
             return 'image/png';
             break; 
